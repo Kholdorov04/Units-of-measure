@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Colorlib Templates">
+<meta name="author" content="Colorlib">
+<meta name="keywords" content="Colorlib Templates">
+<title>O'lchov birliklari</title>
+
+<style>
+body {
+    font-family: Arial Rounded MT;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#bg-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1000;
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover;
+    filter: blur(5px);
+}
+
+.container {
+    background-color: blur;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+
+.converter {
+    margin: 30px 0;
+}
+
+.converter h2{
+    color: blue;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+}
+
+input[type="number"], select {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 24px);
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    margin-top: 10px;
+    color: blue;
+}
+</style>
+</head>
+<body>
+<video autoplay muted loop id="bg-video">
+    <source src="videos.mp4" type="video/mp4">
+</video>
+<div class="container">
+    <div class="converter">
+        <h2>UZUNLIK O'LCHOVLARI</h2>
+        <form method="POST" action="{% url 'convert_length' %}">
+            {% csrf_token %}
+            <input type="number" name="value" placeholder="SON KIRITING:" required>
+            <select name="from_unit">
+                <option value="m">METR</option>
+                <option value="km">KILOMETR</option>
+                <option value="cm">SANTIMETR</option>
+                <option value="dm">DETSIMETR</option>
+                <option value="mm">MILLIMETR</option>
+            </select>
+            ↓↑  ↑↓
+            <select name="to_unit">
+                <option value="m">METR</option>
+                <option value="km">KILOMETR</option>
+                <option value="cm">SANTIMETR</option>
+                <option value="dm">DETSIMETR</option>
+                <option value="mm">MILLIMETR</option>
+            </select>
+            <button type="submit">HISOBLASH</button>
+        </form>
+        {% if length_result %}
+            <p>Natija: {{ length_result }}</p>
+        {% endif %}
+    </div>
+    <div class="converter">
+        <h2>OG'IRLIK O'LCHOVLARI</h2>
+        <form method="POST" action="{% url 'convert_weight' %}">
+            {% csrf_token %}
+            <input type="number" name="value" placeholder="SON KIRITING:" required>
+            <select name="from_unit">
+                <option value="kg">KILOGRAMM</option>
+                <option value="gr">GRAMM</option>
+                <option value="ton">TONNA</option>
+                <option value="sr">SENTNER</option>
+            </select>
+            ↓↑  ↑↓
+            <select name="to_unit">
+                <option value="kg">KILOGRAMM</option>
+                <option value="gr">GRAMM</option>
+                <option value="ton">TONNA</option>
+                <option value="sr">SENTNER</option>
+            </select>
+            <button type="submit">HISOBLASH</button>
+        </form>
+        {% if weight_result %}
+            <p>Natija: {{ weight_result }}</p>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
